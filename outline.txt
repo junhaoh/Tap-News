@@ -1,0 +1,21 @@
+front-end react client with NewsPanel and NewsCard
+node.js and express server
+
+backend_server rpc_client
+utils => mongodb_client
+mongod --dbpath ~/Downloads/Projects/mongodb
+mongo --host 127.0.0.1:27017
+
+cloudAMQP
+pika
+install => sudo pip install -r requirement.txt
+
+cookie
+Browser sends a HTTP GET request
+Server sends a HTTP GET response with Set-Cookie(key-valued pair, timeout, session token)
+Browser sends the cookie to server
+client-session is connect middleware that implements sessions in encrypted cookies
+use sha1/sha256 to encryp the password; add salt server side generated 
+
+login page render login form, passing onChange to login form
+signup page => signup form, adding confirm password

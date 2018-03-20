@@ -1,0 +1,7 @@
+.nav-wrapper {
+    background-color: transparent;
+}
+
+.nav-wrapper .brand-logo {
+    padding-left: 30px
+}
