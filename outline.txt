@@ -19,3 +19,6 @@ use sha1/sha256 to encryp the password; add salt server side generated
 
 login page render login form, passing onChange to login form
 signup page => signup form, adding confirm password
+
+mongo schema user(email, password)
+local login and signup password, apply middleware with jwt checker
