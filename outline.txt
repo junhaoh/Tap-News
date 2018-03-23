@@ -47,4 +47,3 @@ set sleep time, call CloudAMQPClient
 
 
  => news fetcher => news deduper
-
