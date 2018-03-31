@@ -3,3 +3,6 @@ pymongo
 pika
 requests
 redis
+lxml
+sklearn
+dateutil
