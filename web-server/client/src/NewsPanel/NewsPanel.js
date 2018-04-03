@@ -1,5 +1,5 @@
-import './NewsPanel.css'
 import React, { Component } from 'react'
+import Auth from '../Auth/Auth';
 import _ from 'lodash';
 import NewsCard from '../NewsCard/NewsCard'
 
@@ -24,24 +24,25 @@ class NewsPanel extends Component {
         }
     }
 
-    loadMoreNews(e) {
+    loadMoreNews() {
         if (this.state.loadAll === true) {
             return
         }
 
-        let url = 'http://localhost:3000/news/userId' + Auth.getEmail() + '/pageNum' + this.state.pageNum
+        let url = 'http://localhost:3000/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum
 
         let request = new Request(encodeURI(url), {
             method: 'GET',
             headers: {
-                'Authorization': 'bearer' + Auth.getToken()
+                'Authorization': 'bearer ' + Auth.getToken(),
+                'content-type': 'application/json'
             },
-            cache: false
+            cache: false,
         })
 
         fetch(request)
-        .then((res) => res.json())
-        .then((news) => {
+        .then(res => { return res.json() })
+        .then(news => {
             if (!news || news.length === 0) {
                 this.setState({loadAll: true})
             }
@@ -74,7 +75,7 @@ class NewsPanel extends Component {
     render() {
         if (this.state.news) {
             return (
-                <div>{this.renderNews()}</div>
+                <div>{ this.renderNews() }</div>
             )
         } else {
             return (

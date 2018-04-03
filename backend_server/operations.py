@@ -19,7 +19,7 @@ import mongodb_client
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 
-NEWS_TABLE_NAME = "news"
+NEWS_TABLE_NAME = "news-test"
 CLICK_LOGS_TABLE_NAME = 'click_logs'
 
 NEWS_LIMIT = 100

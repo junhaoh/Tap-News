@@ -1,7 +1,7 @@
 # !/bin/bash
 
-brew services restart mongodb
-brew services restart redis
+# brew services restart mongodb
+# brew services restart redis
 
 # pip install -r requirements.txt
 
