@@ -6,12 +6,13 @@ import NewsCard from '../NewsCard/NewsCard'
 class NewsPanel extends Component {
     constructor(props) {
         super();
-        this.state = {news:null};
+        this.state = {news:null, pageNum:1, loadAll:false};
         this.handleScroll = this.handleScroll.bind(this)
     }
 
     componentDidMount() {
-        this.loadMoreNews();
+        this.loadMoreNews()
+        this.loadMoreNews = _.debounce(this.loadMoreNews, 1000)
         window.addEventListener('scroll', this.handleScroll)
     }
 
@@ -19,27 +20,38 @@ class NewsPanel extends Component {
         let scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
         if ((window.innerHeight + scrollY) >= (document.body.offsetHeight - 50)) {
             console.log('load more news')
-            //this.loadMoreNews()
+            this.loadMoreNews()
         }
     }
 
-    // loadMoreNews(e) {
-    //     let request = new Request('http://localhost:3000/news', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Authorization': 'bearer' + Auth.getToken()
-    //         },
-    //         cache: false
-    //     })
+    loadMoreNews(e) {
+        if (this.state.loadAll === true) {
+            return
+        }
 
-    //     fetch(request)
-    //     .then((res) => res.json())
-    //     .then((news) => {
-    //         this.setState({
-    //             news: this.state.news ? this.state.news.concat(news) : news
-    //         })
-    //     })
-    // }
+        let url = 'http://localhost:3000/news/userId' + Auth.getEmail() + '/pageNum' + this.state.pageNum
+
+        let request = new Request(encodeURI(url), {
+            method: 'GET',
+            headers: {
+                'Authorization': 'bearer' + Auth.getToken()
+            },
+            cache: false
+        })
+
+        fetch(request)
+        .then((res) => res.json())
+        .then((news) => {
+            if (!news || news.length === 0) {
+                this.setState({loadAll: true})
+            }
+
+            this.setState({
+                news: this.state.news ? this.state.news.concat(news) : news,
+                pageNum: this.state.pageNum + 1
+            })
+        })
+    }
 
     renderNews() {
         const news_list = this.state.news.map(news => {

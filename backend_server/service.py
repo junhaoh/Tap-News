@@ -2,6 +2,7 @@ import json
 import pyjsonrpc
 import os
 import sys
+import operations
 
 from bson.json_util import dumps
 
@@ -18,10 +19,8 @@ class RequestHandler(pyjsonrpc.HttpRequestHandler):
         return a + b
 
     @pyjsonrpc.rpcmethod
-    def getNews(self):
-        db = mongodb_client.get_db()
-        news = list(db['news'].find())
-        return json.loads(dumps(news))
+    def getNewsSummariesForUser(self, user_id, page_num):
+        return operations.getNewsSummariesForUser(user_id, page_num)
 
 http_server = pyjsonrpc.ThreadingHttpServer(
     server_address = (SERVER_HOST, SERVER_PORT),
