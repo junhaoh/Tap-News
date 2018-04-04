@@ -14,18 +14,18 @@ function getNewsSummariesForUser(user_id, page_num, callback) {
     });
   }
   
-//   // Log a news click event for a user
-//   function logNewsClickForUser(user_id, news_id) {
-//     client.request('logNewsClickForUser', [user_id, news_id], function(err, error, response) {
-//       console.log('rpc_client/logNewsClickForUser');
-//       if (err) throw err;
-//       console.log(response);
-//     });
-//   }
+// Log a news click event for a user
+function logNewsClickForUser(user_id, news_id) {
+  client.request('logNewsClickForUser', [user_id, news_id], function(err, error, response) {
+    console.log('rpc_client/logNewsClickForUser');
+    if (err) throw err;
+    console.log(response);
+  });
+}
   
-  module.exports = {
-    getNewsSummariesForUser : getNewsSummariesForUser,
-    //logNewsClickForUser : logNewsClickForUser
-  };
+module.exports = {
+  getNewsSummariesForUser : getNewsSummariesForUser,
+  logNewsClickForUser : logNewsClickForUser
+};
 
 
