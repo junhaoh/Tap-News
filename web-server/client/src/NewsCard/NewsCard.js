@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Auth from '../Auth/Auth';
 import './NewsCard.css'
 
 class NewsCard extends Component {

@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import mongodb_client  # pylint: disable=E0401, C0413
+import news_topic_modeling_service_client
 from cloudAMQP_client import CloudAMQPClient  # pylint: disable=E0401, C0413
 
 
@@ -55,6 +56,15 @@ def handle_message(msg):
                 return
 
     task['publishedAt'] = parser.parse(task['publishedAt'])
+
+
+    # Classify news
+    title = task['title']
+    if title is not None:
+        topic = news_topic_modeling_service_client.classify(title)
+        task['class'] = topic
+
+    
     db[NEWS_TABLE_NAME].replace_one({'digest': task['digest']}, task, upsert=True)
     # print('got message! after insert')
 

@@ -7,3 +7,6 @@ lxml
 sklearn
 dateutil
 newspaper
+pandas
+tensorflow
+watchdog

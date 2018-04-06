@@ -41,7 +41,7 @@ class NewsPanel extends Component {
         })
 
         fetch(request)
-        .then(res => { return res.json() })
+        .then(res => res.json())
         .then(news => {
             if (!news || news.length === 0) {
                 this.setState({loadAll: true})
