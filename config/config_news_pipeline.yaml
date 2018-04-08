@@ -1,0 +1,34 @@
+news_monitor:
+    REDIS_HOST : 'localhost'
+    REDIS_PORT : 6379
+    NEWS_TIME_OUT_IN_SECONDS : 259200
+    SLEEP_TIME_IN_SECONDS : 10
+    SCRAPE_NEWS_TASK_QUEUE_URL : 'amqp://xczujvyu:ZD8F9K3gQFQvUjM_nIQ9ZZlP7iWGwqYv@skunk.rmq.cloudamqp.com/xczujvyu'
+    SCRAPE_NEWS_TASK_QUEUE_NAME : 'tap-news-scrape-news-task-queue'
+    NEWS_SOURCES : 
+            - 'abc-news'
+            - 'bbc-news'
+            - 'bbc-sports'
+            - 'bleacher-report'
+            - 'bloomberg'
+            - 'cnn'
+            - 'entertainment-weekly'
+            - 'espn'
+            - 'techcrunch'
+            - 'the-new-york-times'
+            - 'the-wall-street-journal'
+            - 'usa-today'
+
+news_fetcher:
+    SLEEP_TIME_IN_SECONDS : 5
+    SCRAPE_NEWS_TASK_QUEUE_URL : 'amqp://xczujvyu:ZD8F9K3gQFQvUjM_nIQ9ZZlP7iWGwqYv@skunk.rmq.cloudamqp.com/xczujvyu'
+    SCRAPE_NEWS_TASK_QUEUE_NAME : 'tap-news-scrape-news-task-queue'
+    DEDUPE_NEWS_TASK_QUEUE_URL : 'amqp://vbmyanmz:lMxbbWbC_Ce9MSs_yXe3Qxq7EG1wPZax@skunk.rmq.cloudamqp.com/vbmyanmz'
+    DEDUPE_NEWS_TASK_QUEUE_NAME : 'tap-news-dedupe-news-task-queue'
+
+news_deduper:
+    SLEEP_TIME_IN_SECONDS : 1
+    NEWS_TABLE_NAME : 'news-test'
+    SAME_NEWS_SIMILARITY_THRESHOLD : 0.9
+    DEDUPE_NEWS_TASK_QUEUE_URL : 'amqp://vbmyanmz:lMxbbWbC_Ce9MSs_yXe3Qxq7EG1wPZax@skunk.rmq.cloudamqp.com/vbmyanmz'
+    DEDUPE_NEWS_TASK_QUEUE_NAME : 'tap-news-dedupe-news-task-queue' 

@@ -12,14 +12,13 @@ import mongodb_client  # pylint: disable=E0401, C0413
 import news_topic_modeling_service_client
 from cloudAMQP_client import CloudAMQPClient  # pylint: disable=E0401, C0413
 
-
-DEDUPE_NEWS_TASK_QUEUE_URL = 'amqp://vbmyanmz:lMxbbWbC_Ce9MSs_yXe3Qxq7EG1wPZax@skunk.rmq.cloudamqp.com/vbmyanmz'
-DEDUPE_NEWS_TASK_QUEUE_NAME = 'tap-news-dedupe-news-task-queue'
-SLEEP_TIME_IN_SECONDS = 1
-
-NEWS_TABLE_NAME = "news-test"
-
-SAME_NEWS_SIMILARITY_THRESHOLD = 0.9
+import config_client
+config = config_client.get_config('../config/config_news_pipeline.yaml')
+DEDUPE_NEWS_TASK_QUEUE_URL = config['news_deduper']['DEDUPE_NEWS_TASK_QUEUE_URL']
+DEDUPE_NEWS_TASK_QUEUE_NAME = config['news_deduper']['DEDUPE_NEWS_TASK_QUEUE_NAME']
+NEWS_TABLE_NAME = config['news_deduper']['NEWS_TABLE_NAME']
+SLEEP_TIME_IN_SECONDS = config['news_deduper']['SLEEP_TIME_IN_SECONDS']
+SAME_NEWS_SIMILARITY_THRESHOLD = config['news_deduper']['SAME_NEWS_SIMILARITY_THRESHOLD']
 
 cloudAMQP_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 

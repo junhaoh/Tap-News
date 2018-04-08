@@ -15,15 +15,18 @@ import news_recommendation_service_client
 
 from cloudAMQP_client import CloudAMQPClient
 
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+import config_client
 
-NEWS_TABLE_NAME = "news-test"
-CLICK_LOGS_TABLE_NAME = 'click_logs'
+config = config_client.get_config('../config/config_backend_server.yaml')
+REDIS_HOST = config['operations']['REDIS_HOST']
+REDIS_PORT = config['operations']['REDIS_PORT']
 
-NEWS_LIMIT = 100
-NEWS_LIST_BATCH_SIZE = 10
-USER_NEWS_TIME_OUT_IN_SECONDS = 60
+NEWS_TABLE_NAME = config['operations']['NEWS_TABLE_NAME']
+CLICK_LOGS_TABLE_NAME = config['operations']['CLICK_LOGS_TABLE_NAME']
+
+NEWS_LIMIT = config['operations']['NEWS_LIMIT']
+NEWS_LIST_BATCH_SIZE = config['operations']['NEWS_LIST_BATCH_SIZE']
+USER_NEWS_TIME_OUT_IN_SECONDS = config['operations']['USER_NEWS_TIME_OUT_IN_SECONDS']
 
 LOG_CLICKS_TASK_QUEUE_URL = "amqp://voenbcmw:uOMGENscb1T1eALaqDwKNfnWkcB46z_r@hornet.rmq.cloudamqp.com/voenbcmw"
 LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
@@ -70,7 +73,7 @@ def getNewsSummariesForUser(user_id, page_num):
         # Remove text field to save bandwidth.
         del news['text']
         if news['class'] == topPreference:
-             news['reason'] = 'Recommend'
+            news['reason'] = 'Recommend'
         if news['publishedAt'].date() == datetime.today().date():
             news['time'] = 'today'
     return json.loads(dumps(sliced_news))

@@ -27,14 +27,14 @@ from cloudAMQP_client import CloudAMQPClient
 NUM_OF_CLASSES = 17
 INITIAL_P = 1.0 / NUM_OF_CLASSES
 ALPHA = 0.1
-
 SLEEP_TIME_IN_SECONDS = 1
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://voenbcmw:uOMGENscb1T1eALaqDwKNfnWkcB46z_r@hornet.rmq.cloudamqp.com/voenbcmw"
-LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
-
-PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
-NEWS_TABLE_NAME = "news-test"
+import config_client
+config = config_client.get_config('../config/config_news_recommendation_service.yaml')
+PREFERENCE_MODEL_TABLE_NAME = config['click_log_processor']['PREFERENCE_MODEL_TABLE_NAME']
+LOG_CLICKS_TASK_QUEUE_URL = config['click_log_processor']['LOG_CLICKS_TASK_QUEUE_URL']
+LOG_CLICKS_TASK_QUEUE_NAME = config['click_log_processor']['LOG_CLICKS_TASK_QUEUE_NAME']
+NEWS_TABLE_NAME = config['click_log_processor']['NEWS_TABLE_NAME']
 
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
 

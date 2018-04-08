@@ -11,17 +11,20 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import news_api_client
 from cloudAMQP_client import CloudAMQPClient
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-NEWS_TIME_OUT_IN_SECONDS = 3600 * 24
+import config_client
+config = config_client.get_config('../config/config_news_pipeline.yaml')
+REDIS_HOST = config['news_monitor']['REDIS_HOST']
+REDIS_PORT = config['news_monitor']['REDIS_PORT']
+SCRAPE_NEWS_TASK_QUEUE_URL = config['news_monitor']['SCRAPE_NEWS_TASK_QUEUE_URL']
+SCRAPE_NEWS_TASK_QUEUE_NAME = config['news_monitor']['SCRAPE_NEWS_TASK_QUEUE_NAME']
 SLEEP_TIME_IN_SECONDS = 10
-
-SCRAPE_NEWS_TASK_QUEUE_URL = 'amqp://xczujvyu:ZD8F9K3gQFQvUjM_nIQ9ZZlP7iWGwqYv@skunk.rmq.cloudamqp.com/xczujvyu'
-SCRAPE_NEWS_TASK_QUEUE_NAME = 'tap-news-scrape-news-task-queue'
+NEWS_TIME_OUT_IN_SECONDS = 3600 * 24 * 3
 
 NEWS_SOURCES = [
     'abc-news',
-    'bleacher-report'
+    'bbc-news',
+    'bbc-sports',
+    'bleacher-report',
     'bloomberg',
     'cnn',
     'entertainment-weekly',

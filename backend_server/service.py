@@ -8,9 +8,11 @@ from bson.json_util import dumps
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import mongodb_client
+import config_client
 
-SERVER_HOST = 'localhost'
-SERVER_PORT = 4040
+config = config_client.get_config('../config/config_backend_server.yaml')
+SERVER_HOST = config['service']['SERVER_HOST']
+SERVER_PORT = config['service']['SERVER_PORT']
 
 class RequestHandler(pyjsonrpc.HttpRequestHandler):
     @pyjsonrpc.rpcmethod

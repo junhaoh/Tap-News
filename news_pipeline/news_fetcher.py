@@ -10,15 +10,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'scrapers'))
 import cnn_news_scraper
 from cloudAMQP_client import CloudAMQPClient
 
-# use your own queue.
-
-SCRAPE_NEWS_TASK_QUEUE_URL = 'amqp://xczujvyu:ZD8F9K3gQFQvUjM_nIQ9ZZlP7iWGwqYv@skunk.rmq.cloudamqp.com/xczujvyu'
-SCRAPE_NEWS_TASK_QUEUE_NAME = 'tap-news-scrape-news-task-queue'
-
-DEDUPE_NEWS_TASK_QUEUE_URL = 'amqp://vbmyanmz:lMxbbWbC_Ce9MSs_yXe3Qxq7EG1wPZax@skunk.rmq.cloudamqp.com/vbmyanmz'
-DEDUPE_NEWS_TASK_QUEUE_NAME = 'tap-news-dedupe-news-task-queue'
-
-SLEEP_TIME_IN_SECONDS = 5
+import config_client
+config = config_client.get_config('../config/config_news_pipeline.yaml')
+SCRAPE_NEWS_TASK_QUEUE_URL = config['news_fetcher']['SCRAPE_NEWS_TASK_QUEUE_URL']
+SCRAPE_NEWS_TASK_QUEUE_NAME = config['news_fetcher']['SCRAPE_NEWS_TASK_QUEUE_NAME']
+DEDUPE_NEWS_TASK_QUEUE_URL = config['news_fetcher']['DEDUPE_NEWS_TASK_QUEUE_URL']
+DEDUPE_NEWS_TASK_QUEUE_NAME = config['news_fetcher']['DEDUPE_NEWS_TASK_QUEUE_NAME']
+SLEEP_TIME_IN_SECONDS = config['news_fetcher']['SLEEP_TIME_IN_SECONDS']
 
 dedupe_news_queue_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 scrape_news_queue_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)

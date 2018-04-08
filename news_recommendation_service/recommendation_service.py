@@ -8,10 +8,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import mongodb_client
 
-PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
-
-SERVER_HOST = 'localhost'
-SERVER_PORT = 5050
+import config_client
+config = config_client.get_config('../config/config_news_recommendation_service.yaml')
+PREFERENCE_MODEL_TABLE_NAME = config['click_log_processor']['PREFERENCE_MODEL_TABLE_NAME']
+SERVER_HOST = config['service']['SERVER_HOST']
+SERVER_PORT = config['service']['SERVER_PORT']
 
 # Ref: https://www.python.org/dev/peps/pep-0485/#proposed-implementation
 # Ref: http://stackoverflow.com/questions/5595425/what-is-the-best-way-to-compare-floats-for-almost-equality-in-python

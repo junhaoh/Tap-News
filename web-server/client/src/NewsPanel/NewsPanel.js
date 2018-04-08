@@ -29,22 +29,21 @@ class NewsPanel extends Component {
             return
         }
 
-        let url = 'http://localhost:3000/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum
+        let url = 'http://localhost:3000/news/userId/' + Auth.getEmail() + '/pageNum/' + this.state.pageNum;
 
         let request = new Request(encodeURI(url), {
             method: 'GET',
             headers: {
-                'Authorization': 'bearer ' + Auth.getToken(),
-                'content-type': 'application/json'
+                'Authorization': 'bearer ' + Auth.getToken()
             },
-            cache: false,
-        })
+            cache: false
+        });
 
         fetch(request)
         .then(res => res.json())
         .then(news => {
             if (!news || news.length === 0) {
-                this.setState({loadAll: true})
+                this.setState({loadAll: true});
             }
 
             this.setState({
@@ -55,7 +54,7 @@ class NewsPanel extends Component {
     }
 
     renderNews() {
-        const news_list = this.state.news.map(news => {
+        const news_list = this.state.news.map(function(news) {
             return (
                 <a className='list-group-item' href='/'>
                     <NewsCard news={news} />
